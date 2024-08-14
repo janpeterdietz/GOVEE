@@ -1,0 +1,15 @@
+{
+    "elements": [   {
+        "type": "CheckBox",
+        "name": "Active",
+        "caption": "Active"
+    },
+    {
+        "type": "NumberSpinner",
+        "name": "Interval",
+        "caption": "Interval",
+        "suffix": "seconds"
+    }],
+    "actions": [],
+    "status": []
+}

@@ -1,0 +1,16 @@
+{
+    "id": "{5B709EE6-0F47-6B44-D1FF-A5C7E63EF85C}",
+    "name": "GOVEE_LIGHT",
+    "type": 3,
+    "vendor": "GOVEE",
+    "aliases": [],
+    "parentRequirements": [
+        "{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}"
+    ],
+    "childRequirements": [],
+    "implemented": [
+        "{7A1272A4-CBDB-46EF-BFC6-DCF4A53D2FC7}"
+    ],
+    "prefix": "GVL",
+    "url": ""
+}
