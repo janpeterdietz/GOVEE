@@ -52,7 +52,14 @@ declare(strict_types=1);
             } else {
                 $this->SetTimerInterval('Updatestate', 0);
                 $this->SetStatus(104);
-            }			
+            }	
+			
+			//IPS_LogMessage('Test',  IPS_GetInstance($this->InstanceID)["ConnectionID"] );
+			
+			
+			$data = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)["ConnectionID"] ), true);
+			$this->SetSummary($data["Host"]);
+			
 		}
 
 		public function SendData(string $Payload)
@@ -131,7 +138,6 @@ declare(strict_types=1);
 			$govee_message = '{ "msg" :{ "cmd" : "turn", "data" : { "value":' . $value . ' }}} ';
 			
 			$this->SendData($govee_message);
-        
 			$this->SetTimerInterval("Updatestate", 1000);
 		}
 
@@ -147,15 +153,13 @@ declare(strict_types=1);
 				{
 					$value = 100;
 				}
-				$govee_message = '{ "msg" :{ "cmd" : "brightness", "data" : { "value":' . $value . ' }}} ';
 			}
 			else
 			{
 				$value = 0;
-				//$govee_message = '{ "msg" :{ "cmd" : "turn", "data" : { "value":' . $value . ' }}} ';
-				$govee_message = '{ "msg" :{ "cmd" : "brightness", "data" : { "value":' . $value . ' }}} ';
 			}
 			
+			$govee_message = '{ "msg" :{ "cmd" : "brightness", "data" : { "value":' . $value . ' }}} ';
 			$this->SendData($govee_message);
     		$this->SetTimerInterval("Updatestate", 1000);
 	    }
