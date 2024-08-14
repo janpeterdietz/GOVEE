@@ -16,13 +16,13 @@ declare(strict_types=1);
 			$this->RegisterPropertyInteger('Interval', 10);
 
 			$this->RegisterVariableBoolean ("State", "State",  "~Switch", 10) ;
-			$this->RegisterVariableInteger('Intensity', 'Intensity', '~Intensity.100', 20);
+			$this->RegisterVariableInteger('Brightness', 'Brightness', '~Intensity.100', 20);
 			$this->RegisterVariableInteger('Color', 'Color', '~HexColor', 30);
 			//$this->RegisterVariableInteger('ColorTemperature', 'Color Temperature', 'Govee.ColorTemperature', 0);
         	$this->RegisterVariableInteger('ColorTemperature', 'Color Temperature', '', 40);
             
 			$this->EnableAction('State');
-			$this->EnableAction('Intensity');
+			$this->EnableAction('Brightness');
 			$this->EnableAction('Color');
 			$this->EnableAction('ColorTemperature');
 			
@@ -54,8 +54,6 @@ declare(strict_types=1);
                 $this->SetStatus(104);
             }	
 			
-			//IPS_LogMessage('Test',  IPS_GetInstance($this->InstanceID)["ConnectionID"] );
-			
 			
 			$data = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)["ConnectionID"] ), true);
 			$this->SetSummary($data["Host"]);
@@ -82,7 +80,7 @@ declare(strict_types=1);
             $deviceData = $buffer['msg']['data'];
 
             $this->SetValue('State', $deviceData['onOff']);
-            $this->SetValue('Intensity', $deviceData['brightness']);
+            $this->SetValue('Brightness', $deviceData['brightness']);
 
 			$r =  $deviceData['color']['r'];
 			$g =  $deviceData['color']['g'];
@@ -100,7 +98,7 @@ declare(strict_types=1);
                 case 'State':
 					$this->setState($Value);
 					break;
-                case 'Intensity':
+                case 'Brightness':
                     $this->setBrightness($Value);
                     break;
                 case 'Color':
