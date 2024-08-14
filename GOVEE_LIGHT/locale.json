@@ -5,6 +5,7 @@
             "Interval": "Interval",
             "State": "Status",
             "Intensity": "Intensität",
+            "Brightness": "Helligkeit",
             "Color": "Farbe",
             "Color Temperature": "Farbtemperatur",
             "seconds": "Sekunden",
