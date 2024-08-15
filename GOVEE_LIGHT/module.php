@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 			$this->RequireParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
 
-			$this->RegisterPropertyBoolean('Active', false);
+	$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterPropertyInteger('Interval', 10);
 
 			
@@ -26,7 +26,7 @@ declare(strict_types=1);
 			$this->EnableAction('State');
 			$this->EnableAction('Brightness');
 			$this->EnableAction('Color');
-			$this->EnableAction('ColorTemperature');
+			$this->EnableAction('ColorTemperature');		
 			
        
 			
