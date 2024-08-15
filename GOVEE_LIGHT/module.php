@@ -15,11 +15,13 @@ declare(strict_types=1);
 			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterPropertyInteger('Interval', 10);
 
-			$this->RegisterVariableBoolean ("State", "State",  "~Switch", 10) ;
-			$this->RegisterVariableInteger('Brightness', 'Brightness', '~Intensity.100', 20);
-			$this->RegisterVariableInteger('Color', 'Color', '~HexColor', 30);
+			
+
+			$this->RegisterVariableBoolean ("State", $this->Translate("State"),  "~Switch", 10) ;
+			$this->RegisterVariableInteger('Brightness', $this->Translate('Brightness'), '~Intensity.100', 20);
+			$this->RegisterVariableInteger('Color', $this->Translate('Color'), '~HexColor', 30);
 			//$this->RegisterVariableInteger('ColorTemperature', 'Color Temperature', 'Govee.ColorTemperature', 0);
-        	$this->RegisterVariableInteger('ColorTemperature', 'Color Temperature', '', 40);
+        	$this->RegisterVariableInteger('ColorTemperature', $this->Translate('Color Temperature'), '', 40);
             
 			$this->EnableAction('State');
 			$this->EnableAction('Brightness');
