@@ -10,28 +10,29 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 
+			if (!IPS_VariableProfileExists('GVL.ColorTemperature')) {
+				IPS_CreateVariableProfile('GVL.ColorTemperature', VARIABLETYPE_INTEGER);
+				IPS_SetVariableProfileText('GVL.ColorTemperature', '', ' K');
+				IPS_SetVariableProfileValues ('GVL.ColorTemperature', 0, 4300, 1);
+			}
+
 			$this->RequireParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
 
-	$this->RegisterPropertyBoolean('Active', false);
+			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterPropertyInteger('Interval', 10);
-
-			
 
 			$this->RegisterVariableBoolean ("State", $this->Translate("State"),  "~Switch", 10) ;
 			$this->RegisterVariableInteger('Brightness', $this->Translate('Brightness'), '~Intensity.100', 20);
 			$this->RegisterVariableInteger('Color', $this->Translate('Color'), '~HexColor', 30);
-			//$this->RegisterVariableInteger('ColorTemperature', 'Color Temperature', 'Govee.ColorTemperature', 0);
-        	$this->RegisterVariableInteger('ColorTemperature', $this->Translate('Color Temperature'), '', 40);
+			$this->RegisterVariableInteger('ColorTemperature', $this->Translate('Color Temperature'), 'GVL.ColorTemperature', 40);
             
 			$this->EnableAction('State');
 			$this->EnableAction('Brightness');
 			$this->EnableAction('Color');
 			$this->EnableAction('ColorTemperature');		
-			
        
 			
 			$this->RegisterPropertyInteger("UpdateInterval", 10);
-			//$this->RegisterPropertyString("IPAddress", "192.168.178.1");
 
 			$this->RegisterTimer("Updatestate", ($this->ReadPropertyInteger("Interval"))*1000, 'GVL_UpdateState(' . $this->InstanceID . ');');
 		}
@@ -47,7 +48,6 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			parent::ApplyChanges();
             if ($this->ReadPropertyBoolean('Active')) {
                 $this->SetTimerInterval('Updatestate', $this->ReadPropertyInteger('Interval') * 1000);
                 $this->SetStatus(102);
