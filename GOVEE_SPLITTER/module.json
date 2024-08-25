@@ -1,0 +1,19 @@
+{
+    "id": "{F077D439-617D-CDA1-3B50-B56D18873910}",
+    "name": "GOVEE_SPLITTER",
+    "type": 2,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [
+        "{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}"
+    ],
+    "childRequirements": [
+        "{1EF4729A-A536-49DC-57F5-6DB8E2E723A2}"
+    ],
+    "implemented": [
+        "{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}",
+        "{7A1272A4-CBDB-46EF-BFC6-DCF4A53D2FC7}"
+    ],
+    "prefix": "GVL",
+    "url": ""
+}

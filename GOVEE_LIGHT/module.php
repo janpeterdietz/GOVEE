@@ -1,8 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
-
 	class GOVEE_LIGHT extends IPSModule
 	{
 		public function Create()
@@ -10,16 +8,19 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 
-			if (!IPS_VariableProfileExists('GVL.ColorTemperature')) {
+			$this->ConnectParent('{F077D439-617D-CDA1-3B50-B56D18873910}');
+
+			if (!IPS_VariableProfileExists('GVL.ColorTemperature')) 
+			{
 				IPS_CreateVariableProfile('GVL.ColorTemperature', VARIABLETYPE_INTEGER);
 				IPS_SetVariableProfileText('GVL.ColorTemperature', '', ' K');
 				IPS_SetVariableProfileValues ('GVL.ColorTemperature', 0, 4300, 1);
 			}
 
-			$this->RequireParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
-
 			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterPropertyInteger('Interval', 10);
+			$this->RegisterPropertyString("IPAddress", "192.168.178.1");
+			
 
 			$this->RegisterVariableBoolean ("State", $this->Translate("State"),  "~Switch", 10) ;
 			$this->RegisterVariableInteger('Brightness', $this->Translate('Brightness'), '~Intensity.100', 20);
@@ -48,34 +49,34 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-            if ($this->ReadPropertyBoolean('Active')) {
+			if ($this->ReadPropertyBoolean('Active')) 
+			{
                 $this->SetTimerInterval('Updatestate', $this->ReadPropertyInteger('Interval') * 1000);
                 $this->SetStatus(102);
             } else {
                 $this->SetTimerInterval('Updatestate', 0);
                 $this->SetStatus(104);
-            }	
-			
-			
-			$data = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)["ConnectionID"] ), true);
-			$this->SetSummary($data["Host"]);
-			
+            }
+
+			$this->SetSummary($this->ReadPropertyString("IPAddress"));
 		}
 
+		public function Send()
+		{
+			$this->SendDataToParent(json_encode(['DataID' => '{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}']));
+		}
+		
 		public function SendData(string $Payload)
 		{
 			if ($this->HasActiveParent()) 
 			{
-                //$this->SendDataToParent(json_encode(['DataID' => '{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}', 'Buffer' => $Payload]));
-
 				$this->SendDataToParent(json_encode([
-					'DataID' => "{8E4D9B23-E0F2-1E05-41D8-C21EA53B8706}",
-					'Buffer' => utf8_encode($Payload),
-					'ClientIP' => '',
-					'ClientPort' => 0,
-					'Broadcast' => false
+					'DataID' => '{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}',
+					'Buffer' => $Payload,
+					'ClientIP' => $this->ReadPropertyString("IPAddress"),	
+            		'ClientPort' => 4003
 				]));
-            }
+			}
 		}
 
 
@@ -83,23 +84,29 @@ declare(strict_types=1);
         {
 		
 			//$data = json_decode($JSONString);
-        	//IPS_LogMessage('Device RECV', utf8_decode($data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort));
-		
-			$data = json_decode($JSONString, true);
-			$buffer = json_decode($data['Buffer'], true);
-            $deviceData = $buffer['msg']['data'];
+        	
+			$data = json_decode($JSONString);
+			//IPS_LogMessage('Device RECV', utf8_decode($data->Buffer) . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
+			if ($data->ClientIP == $this->ReadPropertyString("IPAddress"))
+			{
+				//$buffer = json_decode($data['Buffer'], true);
+							
+				$buffer = json_decode($data->Buffer, true);
+							
+				$deviceData = $buffer['msg']['data'];
 
-            $this->SetValue('State', $deviceData['onOff']);
-            $this->SetValue('Brightness', $deviceData['brightness']);
+				$this->SetValue('State', $deviceData['onOff']);
+				$this->SetValue('Brightness', $deviceData['brightness']);
 
-			$r =  $deviceData['color']['r'];
-			$g =  $deviceData['color']['g'];
-			$b =  $deviceData['color']['b'];
-	
-			$color = (int) ( ($r * 256 * 256) + ($g * 256) + $b);
+				$r =  $deviceData['color']['r'];
+				$g =  $deviceData['color']['g'];
+				$b =  $deviceData['color']['b'];
 
-            $this->SetValue('Color', $color);
-            $this->SetValue('ColorTemperature', $deviceData['colorTemInKelvin']);
+				$color = (int) ( ($r * 256 * 256) + ($g * 256) + $b);
+
+				$this->SetValue('Color', $color);
+				$this->SetValue('ColorTemperature', $deviceData['colorTemInKelvin']);
+			}
         }
 		
 		public function RequestAction($Ident, $Value)

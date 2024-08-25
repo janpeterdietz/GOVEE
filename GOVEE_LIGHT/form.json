@@ -9,7 +9,12 @@
         "name": "Interval",
         "caption": "Interval",
         "suffix": "seconds"
-    }],
+    },
+    {   "type": "ValidationTextBox", 
+        "name": "IPAddress", 
+        "caption": "IP address"
+    }
+    ],
     "actions": [],
     "status": []
 }

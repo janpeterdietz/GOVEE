@@ -5,11 +5,11 @@
     "vendor": "GOVEE",
     "aliases": [],
     "parentRequirements": [
-        "{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}"
+        "{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}"
     ],
     "childRequirements": [],
     "implemented": [
-        "{7A1272A4-CBDB-46EF-BFC6-DCF4A53D2FC7}"
+        "{1EF4729A-A536-49DC-57F5-6DB8E2E723A2}"
     ],
     "prefix": "GVL",
     "url": ""
