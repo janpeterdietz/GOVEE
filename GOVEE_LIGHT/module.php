@@ -82,15 +82,13 @@ declare(strict_types=1);
 
 		public function ReceiveData($JSONString)
         {
-		
-			//$data = json_decode($JSONString);
-        	
+			//$data = json_decode($JSONString);	
 			$data = json_decode($JSONString);
-			IPS_LogMessage('Device RECV', utf8_decode($data->Buffer) . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
+			//IPS_LogMessage('Device RECV', utf8_decode($data->Buffer) . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
 			if ($data->ClientIP == $this->ReadPropertyString("IPAddress"))
 			{
 				$buffer = json_decode($data->Buffer, true);
-							
+		
 				$deviceData = $buffer['msg']['data'];
 
 				$this->SetValue('State', $deviceData['onOff']);
