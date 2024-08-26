@@ -33,12 +33,12 @@ declare(strict_types=1);
 		public function GetConfigurationForParent()
         {
             $settings = [
-                'BindPort'           => 4003,
+                'BindPort'           => 4002,
 				//'BindIP'           => '0.0.0.0',
                 'EnableBroadcast'    => false,
                 'EnableReuseAddress' => false,
                 'Host'               => '',
-                'Port'               => 4002,
+                'Port'               => 4003,
 				"Open"				=> true
             ];
 
