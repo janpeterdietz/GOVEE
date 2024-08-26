@@ -9,7 +9,7 @@ declare(strict_types=1);
 			parent::Create();
 
 			//$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
-			$this->ForceParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
+			$this->ForceParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); //UBD Port anfordern
 		}
 
 		public function Destroy()
@@ -22,9 +22,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
-
 			$this->GetConfigurationForParent();
-
 		}
 
 		public function GetConfigurationForParent() //Set UBD Port
@@ -71,7 +69,13 @@ declare(strict_types=1);
 			$data = json_decode($JSONString);
 			//IPS_LogMessage('Splitter RECV', utf8_decode($data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort));
 
-			$this->SendDataToChildren(json_encode(['DataID' => '{1EF4729A-A536-49DC-57F5-6DB8E2E723A2}', 
-			'Buffer' => $data->Buffer, 'ClientIP' => $data->ClientIP, 'ClientPort' => $data->ClientPort]));
+			$this->SendDataToChildren(json_encode(
+					[
+						'DataID' => '{1EF4729A-A536-49DC-57F5-6DB8E2E723A2}', 
+						'Buffer' => $data->Buffer, 
+						'ClientIP' => $data->ClientIP, 
+						'ClientPort' => $data->ClientPort
+					]
+				));
 		}
 	}
