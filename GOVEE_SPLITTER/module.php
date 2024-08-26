@@ -8,7 +8,8 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 
-			$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
+			//$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
+			$this->ForceParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
 		}
 
 		public function Destroy()
@@ -21,7 +22,37 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
+
+			$this->GetConfigurationForParent();
+
+			//print_r(IPS_GetConfiguration(29207));
+
+
 		}
+
+		public function GetConfigurationForParent()
+        {
+            $settings = [
+                'BindPort'           => 4003,
+				//'BindIP'           => '0.0.0.0',
+                'EnableBroadcast'    => false,
+                'EnableReuseAddress' => false,
+                'Host'               => '',
+                'Port'               => 4002,
+				"Open"				=> true
+            ];
+
+            return json_encode($settings, JSON_UNESCAPED_SLASHES);
+
+			//{"BindIP":"192.168.3.44","BindPort":4003,"EnableBroadcast":false,"EnableReuseAddress":false,"Host":"","Open":true,"Port":0}
+		}
+
+
+  
+		
+			
+
+  
 
 		public function ForwardData($JSONString)
 		{
@@ -48,12 +79,6 @@ declare(strict_types=1);
 		public function ReceiveData($JSONString)
 		{
 		
-			//$guid = "{01CE6F1F-772D-83C5-4AAC-194173A05117}";
-			//print_r(IPS_GetInstanceListByModuleID($guid));
-
-			//print_r(IPS_GetInstance(23736));
-			//print_r(IPS_GetInstance(22198));
-
 			$data = json_decode($JSONString);
 			//IPS_LogMessage('Splitter RECV', utf8_decode($data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort));
 
