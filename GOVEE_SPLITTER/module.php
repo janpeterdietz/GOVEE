@@ -34,7 +34,7 @@ declare(strict_types=1);
         {
             $settings = [
                 'BindPort'           => 4002,
-				//'BindIP'           => '0.0.0.0',
+				'BindIP'           => '0.0.0.0',
                 'EnableBroadcast'    => false,
                 'EnableReuseAddress' => false,
                 'Host'               => '',
