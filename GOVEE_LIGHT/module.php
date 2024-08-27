@@ -58,9 +58,11 @@ declare(strict_types=1);
                 $this->SetStatus(104);
             }
 
-			$this->SetSummary($this->ReadPropertyString("IPAddress"));
 
-			$this->SetReceiveDataFilter($this->ReadPropertyString("IPAddress"));
+			$IPAddress=$this->ReadPropertyString("IPAddress");
+			$this->SetSummary($IPAddress);
+
+			//$this->SetReceiveDataFilter($IPAddress);
 		}
 
 		public function Send()
