@@ -23,6 +23,10 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 			$this->GetConfigurationForParent();
+
+			print_r (IPS_GetInstance($this->InstanceID)['ConnectionID']);
+			//$IPAddress=$this->ReadPropertyString("IPAddress");
+			//$this->SetSummary($IPAddress);
 		}
 
 		public function GetConfigurationForParent() //Set UBD Port
