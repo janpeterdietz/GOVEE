@@ -63,7 +63,6 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 		
-			$IPAddress = $this->ReadPropertyString('RemoteIP'); 
 			$filter = '.*' . preg_quote('"ClientIP":"' . $IPAddress . '"'); 
 			echo 	$filter;
 		
