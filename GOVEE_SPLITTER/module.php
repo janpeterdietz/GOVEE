@@ -7,9 +7,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-
-			//$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}');
-			$this->ForceParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); //UBD Port anfordern
+			$this->ForceParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); //UDP Port anfordern
 		}
 
 		public function Destroy()
@@ -22,10 +20,11 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
-			$this->GetConfigurationForParent();
+			$this->GetConfigurationForParent(); // UDP Port konfigurieren
 
+			// SetSummary setzen
 			$config = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
-			$this->SetSummary($config['BindIP'] .".". $config['BindPort']);
+			$this->SetSummary($config['BindIP'] .":". $config['BindPort']);
 		}
 
 		public function GetConfigurationForParent() //Set UBD Port
@@ -41,7 +40,6 @@ declare(strict_types=1);
             ];
 
             return json_encode($settings, JSON_UNESCAPED_SLASHES);
-
 		}
 
   
@@ -51,16 +49,13 @@ declare(strict_types=1);
 			$data = json_decode($JSONString);
 			//IPS_LogMessage('Splitter FRWD', utf8_decode($data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort));
 
-			$this->SendDataToParent(json_encode([
-		
+			$this->SendDataToParent(json_encode(
+				[
 				'DataID' => '{8E4D9B23-E0F2-1E05-41D8-C21EA53B8706}', 
-
 				'Buffer' => $data->Buffer, 
-				
 				'ClientIP' => $data->ClientIP,
             	'ClientPort' => $data->ClientPort,
 				'Broadcast' => false
-
 				]));
 
 			return 'String data for device instance!';
