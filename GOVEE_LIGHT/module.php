@@ -63,7 +63,7 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter('"/192/mu"');
+			$this->SetReceiveDataFilter("/192/mu");
 				
 		}
 
