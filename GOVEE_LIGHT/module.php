@@ -64,6 +64,8 @@ declare(strict_types=1);
 
 		
 			$filter = '.*ClientIP.*';
+			$filter = '.*$IPAddress.*';
+			
 			//$this->SetReceiveDataFilter('.*ClientIP.*');
 			$this->SetReceiveDataFilter($filter);
 
