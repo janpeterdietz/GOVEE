@@ -53,7 +53,8 @@ declare(strict_types=1);
 			{
                 $this->SetTimerInterval('Updatestate', $this->ReadPropertyInteger('Interval') * 1000);
                 $this->SetStatus(102);
-            } else {
+            } else 
+			{
                 $this->SetTimerInterval('Updatestate', 0);
                 $this->SetStatus(104);
             }
@@ -70,10 +71,6 @@ declare(strict_types=1);
 
 		}
 
-		public function Send()
-		{
-			$this->SendDataToParent(json_encode(['DataID' => '{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}']));
-		}
 		
 		public function SendData(string $Payload)
 		{
@@ -130,11 +127,7 @@ declare(strict_types=1);
                     $this->setColor($Value);
                     break;
                 case 'ColorTemperature':
-					if (!is_int($Value))
-					{
-						$Value = intval($Value);
-					}
-                    $this->setColorTemperature($Value);
+				    $this->setColorTemperature($Value);
                     break;
                 default:
                     $this->SendDebug(__FUNCTION__, 'Invalid Action: ' . $Ident, 0);
