@@ -161,7 +161,7 @@ declare(strict_types=1);
 			$govee_message = '{ "msg" :{ "cmd" : "turn", "data" : { "value":' . $value . ' }}} ';
 			
 			$this->SendData($govee_message);
-			$this->SetTimerInterval("Updatestate", 1000);
+			$this->SetTimerInterval("Updatestate", 800);
 		}
 
         private function setBrightness(int $brightness)
@@ -184,7 +184,7 @@ declare(strict_types=1);
 			
 			$govee_message = '{ "msg" :{ "cmd" : "brightness", "data" : { "value":' . $value . ' }}} ';
 			$this->SendData($govee_message);
-    		$this->SetTimerInterval("Updatestate", 1000);
+    		$this->SetTimerInterval("Updatestate", 800);
 	    }
 
         private function setColor(int $color)
@@ -208,10 +208,10 @@ declare(strict_types=1);
 										}' ;
 			
 			$this->SendData($govee_message);
-    		$this->SetTimerInterval("Updatestate", 1000);
+    		$this->SetTimerInterval("Updatestate", 800);
 	    }
 
-        private function setColorTemperature(int $ct)
+        private function setColorTemperature(int $colortemperature)
         {
 			$govee_message = '{ "msg" :{
 											"cmd":"colorwc", 
@@ -222,12 +222,12 @@ declare(strict_types=1);
 					   							"b": ' . 0 . '
 					   							}
 					   							, 
-					   							"colorTemInKelvin": ' . $ct . '
+					   							"colorTemInKelvin": ' . $colortemperature . '
 					 							}
 				 							}
 			 							}';
 
 			 $this->SendData($govee_message);
-			 $this->SetTimerInterval("Updatestate", 1000);
+			 $this->SetTimerInterval("Updatestate", 800);
         }
 	}
