@@ -63,13 +63,9 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 		
-			//$filter = '.*"ClientIP":.*';
-			//$filter .= '.*' .$IPAddress. '.*';
-	
 			$filter = '.*"ClientIP":.*';
 			$filter .= '.*' . '"' . $IPAddress. '"'. '.*';
 			
-			//$this->SetReceiveDataFilter('.*ClientIP.*');
 			$this->SetReceiveDataFilter($filter);
 
 		}
@@ -95,7 +91,7 @@ declare(strict_types=1);
 
 		public function ReceiveData($JSONString)
         {
-			IPS_LogMessage('Device RECV', $JSONString);
+			//IPS_LogMessage('Device RECV', $JSONString);
 			$data = json_decode($JSONString);
 			
 
