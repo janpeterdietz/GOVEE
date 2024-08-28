@@ -63,7 +63,7 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 		
-			$filter = '.*ClientIP.*';
+			$filter = '.*"ClientIP".*';
 			$filter .= '.*' .$IPAddress. '.*';
 			
 			//$this->SetReceiveDataFilter('.*ClientIP.*');
