@@ -63,8 +63,9 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 		
-			//$filter = '.*' . preg_quote('"ClientIP":"' . $IPAddress . '"'); 
-			$this->SetReceiveDataFilter('.*ClientIP.*');
+			$filter = '.*ClientIP.*';
+			//$this->SetReceiveDataFilter('.*ClientIP.*');
+			$this->SetReceiveDataFilter($filter);
 
 		}
 
