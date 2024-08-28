@@ -63,8 +63,8 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter('"msg"');
-			
+			$this->SetReceiveDataFilter('"/192/mu"');
+				
 		}
 
 		public function Send()
