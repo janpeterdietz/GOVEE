@@ -24,7 +24,7 @@ declare(strict_types=1);
 			parent::ApplyChanges();
 			$this->GetConfigurationForParent();
 
-			print_r (IPS_GetInstance($this->InstanceID)['ConnectionID']);
+			echo IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']);
 			//$IPAddress=$this->ReadPropertyString("IPAddress");
 			//$this->SetSummary($IPAddress);
 		}
@@ -33,7 +33,7 @@ declare(strict_types=1);
         {
             $settings = [
                 'BindPort'           => 4002,
-				'BindIP'           => 'localhost',
+				'BindIP'           => '0.0.0.0',
                 'EnableBroadcast'    => false,
                 'EnableReuseAddress' => false,
                 'Host'               => '',
