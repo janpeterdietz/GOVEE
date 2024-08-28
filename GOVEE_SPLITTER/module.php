@@ -52,7 +52,7 @@ declare(strict_types=1);
 		
 				'DataID' => '{8E4D9B23-E0F2-1E05-41D8-C21EA53B8706}', 
 
-				'Buffer' => utf8_decode($data->Buffer), 
+				'Buffer' => $data->Buffer, 
 				
 				'ClientIP' => $data->ClientIP,
             	'ClientPort' => $data->ClientPort,
@@ -67,7 +67,7 @@ declare(strict_types=1);
 		{
 		
 			$data = json_decode($JSONString);
-			IPS_LogMessage('Splitter RECV', utf8_decode($data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort));
+			IPS_LogMessage('Splitter RECV', $data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
 
 			$this->SendDataToChildren(json_encode(
 					[
