@@ -64,10 +64,10 @@ declare(strict_types=1);
 
 		
 			$filter = '.*' . preg_quote('"ClientIP":"' . $IPAddress . '"'); 
-			echo 	$filter;
+			//echo 	$filter;
 		
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter($filter);
+			//$this->SetReceiveDataFilter($filter);
 
 		}
 
@@ -94,7 +94,10 @@ declare(strict_types=1);
         {
 			//$data = json_decode($JSONString);	
 			$data = json_decode($JSONString);
-			IPS_LogMessage('Device RECV', utf8_decode($data->Buffer) . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
+			IPS_LogMessage('Device RECV', $data);
+
+			//IPS_LogMessage('Device RECV', $data->Buffer . ' - ' . $data->ClientIP . ' - ' . $data->ClientPort);
+			
 			if ($data->ClientIP == $this->ReadPropertyString("IPAddress"))
 			{
 				$buffer = json_decode($data->Buffer, true);
