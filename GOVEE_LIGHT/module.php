@@ -63,8 +63,8 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter('*"ClientIP":*/i"');
-			//
+			$this->SetReceiveDataFilter('');
+			
 		}
 
 		public function Send()
