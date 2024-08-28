@@ -24,7 +24,7 @@ declare(strict_types=1);
 			parent::ApplyChanges();
 			$this->GetConfigurationForParent();
 
-			$config = json_encode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
+			$config = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
 			echo $config['BindIP']. $config['BindPort']; 
 			//$IPAddress=$this->ReadPropertyString("IPAddress");
 			//$this->SetSummary($IPAddress);
