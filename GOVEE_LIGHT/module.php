@@ -63,7 +63,7 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter('"masg"');
+			$this->SetReceiveDataFilter('"msg"');
 			
 		}
 
