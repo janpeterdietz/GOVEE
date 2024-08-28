@@ -64,7 +64,7 @@ declare(strict_types=1);
 
 		
 			$IPAddress = $this->ReadPropertyString('RemoteIP'); 
-			$filter = '.*' . preg_quote('"ClientIP":"' . $remoteIP . '"'); 
+			$filter = '.*' . preg_quote('"ClientIP":"' . $IPAddress . '"'); 
 			echo 	$filter;
 		
 			//$this->SetReceiveDataFilter($IPAddress);
