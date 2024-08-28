@@ -62,9 +62,14 @@ declare(strict_types=1);
 			$IPAddress=$this->ReadPropertyString("IPAddress");
 			$this->SetSummary($IPAddress);
 
+		
+			$IPAddress = $this->ReadPropertyString('RemoteIP'); 
+			$filter = '.*' . preg_quote('"ClientIP":"' . $remoteIP . '"'); 
+			echo 	$filter;
+		
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter("/192/mu");
-				
+			$this->SetReceiveDataFilter($filter);
+
 		}
 
 		public function Send()
