@@ -63,8 +63,8 @@ declare(strict_types=1);
 			$this->SetSummary($IPAddress);
 
 			//$this->SetReceiveDataFilter($IPAddress);
-			$this->SetReceiveDataFilter(preg_quote('"dev"'));
-			//'"ClientIP":"'
+			$this->SetReceiveDataFilter('"ClientIP":"');
+			//
 		}
 
 		public function Send()
