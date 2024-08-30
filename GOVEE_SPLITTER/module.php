@@ -36,7 +36,7 @@ declare(strict_types=1);
                 'EnableReuseAddress' => false,
                 'Host'               => '',
                 'Port'               => 4003,
-				"Open"				=> true
+				//"Open"				=> true
             ];
 
             return json_encode($settings, JSON_UNESCAPED_SLASHES);
