@@ -158,7 +158,7 @@ declare(strict_types=1);
         {
 			$this->SetTimerInterval("Updatestate", 0);
 	
-			$govee_message = '{ "msg" :{ "cmd" : "devStatus", "data" :{} }} ';
+			$govee_message = '{"msg":{"cmd":"devStatus","data":{}}} ';
 			$this->SendData($govee_message);
 
 			$this->SetTimerInterval('Updatestate', $this->ReadPropertyInteger('Interval') * 1000);

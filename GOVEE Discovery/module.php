@@ -102,7 +102,7 @@ declare(strict_types=1);
         {
 			
 			//IPS_LogMessage('Descvery Send', "Scan Start");
-			$govee_message = '{ "msg" :{ "cmd" : "scan", "data" : {"account_topic":"reserve"} }} ';
+			$govee_message = '{"msg":{"cmd":"scan","data":{"account_topic":"reserve"}}} ';
 			$this->SendData($govee_message);
 
 		}
