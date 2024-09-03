@@ -1,14 +1,15 @@
 <?php
 
 declare(strict_types=1);
-	class GOVEE_LIGHT extends IPSModule
+	class GOVEELight extends IPSModule
 	{
 		public function Create()
 		{
 			//Never delete this line!
 			parent::Create();
 
-			$this->ConnectParent('{F077D439-617D-CDA1-3B50-B56D18873910}');
+			//$this->RequireParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
 			if (!IPS_VariableProfileExists('GVL.ColorTemperature')) 
 			{
@@ -37,6 +38,7 @@ declare(strict_types=1);
 
 			$this->RegisterTimer("Updatestate", ($this->ReadPropertyInteger("Interval"))*1000, 'GVL_UpdateState(' . $this->InstanceID . ');');
 		}
+		
 
 		public function Destroy()
 		{
@@ -53,8 +55,7 @@ declare(strict_types=1);
 			{
                 $this->SetTimerInterval('Updatestate', $this->ReadPropertyInteger('Interval') * 1000);
                 $this->SetStatus(102);
-            } else 
-			{
+            } else {
                 $this->SetTimerInterval('Updatestate', 0);
                 $this->SetStatus(104);
             }
@@ -63,24 +64,34 @@ declare(strict_types=1);
 			$IPAddress=$this->ReadPropertyString("IPAddress");
 			$this->SetSummary($IPAddress);
 
-		
-			$filter = '.*"ClientIP":.*';
-			$filter .= '.*' . '"' . $IPAddress. '"'. '.*';
 			
+			$filter = '.*cmd.*';
+			$filter .= '.*devStatus.*';
+
+			$filter .= '.*"ClientIP":.*';
+			$filter .= '.*' . '"' . $IPAddress. '"'. '.*';
+		
+
 			$this->SetReceiveDataFilter($filter);
 
 		}
 
-		
+		public function Send()
+		{
+			$this->SendDataToParent(json_encode(['DataID' => '{244A8DDD-ECFF-489F-6B91-F436AFAE7115}']));
+		}
+
 		public function SendData(string $Payload)
 		{
 			if ($this->HasActiveParent()) 
 			{
 				$this->SendDataToParent(json_encode([
-					'DataID' => '{B81BAD04-66BA-62B7-8E3C-9F525CE7B335}',
+					'DataID' => '{244A8DDD-ECFF-489F-6B91-F436AFAE7115}',
 					'Buffer' => $Payload,
 					'ClientIP' => $this->ReadPropertyString("IPAddress"),	
-            		'ClientPort' => 4003
+            		'ClientPort' => 4003,
+					'Broadcast' => false,
+					'EnableBroadcast' => false
 				]));
 			}
 		}
@@ -97,22 +108,25 @@ declare(strict_types=1);
 			if ($data->ClientIP == $this->ReadPropertyString("IPAddress"))
 			{
 				$buffer = json_decode($data->Buffer, true);
-		
-				$deviceData = $buffer['msg']['data'];
 
-				$this->SetValue('State', $deviceData['onOff']);
-				$this->SetValue('Brightness', $deviceData['brightness']);
+				if ($buffer['msg']['cmd'] == 'devStatus')
+				{
+					$deviceData = $buffer['msg']['data'];
 
-				$r =  $deviceData['color']['r'];
-				$g =  $deviceData['color']['g'];
-				$b =  $deviceData['color']['b'];
+					$this->SetValue('State', $deviceData['onOff']);
+					$this->SetValue('Brightness', $deviceData['brightness']);
 
-				$color = (int) ( ($r * 256 * 256) + ($g * 256) + $b);
+					$r =  $deviceData['color']['r'];
+					$g =  $deviceData['color']['g'];
+					$b =  $deviceData['color']['b'];
 
-				$this->SetValue('Color', $color);
-				$this->SetValue('ColorTemperature', $deviceData['colorTemInKelvin']);
+					$color = (int) ( ($r * 256 * 256) + ($g * 256) + $b);
+
+					$this->SetValue('Color', $color);
+					$this->SetValue('ColorTemperature', $deviceData['colorTemInKelvin']);
+				}
 			}
-        }
+		}
 		
 		public function RequestAction($Ident, $Value)
         {
@@ -127,7 +141,11 @@ declare(strict_types=1);
                     $this->setColor($Value);
                     break;
                 case 'ColorTemperature':
-				    $this->setColorTemperature($Value);
+					if (!is_int($Value))
+					{
+						$Value = intval($Value);
+					}
+                    $this->setColorTemperature($Value);
                     break;
                 default:
                     $this->SendDebug(__FUNCTION__, 'Invalid Action: ' . $Ident, 0);

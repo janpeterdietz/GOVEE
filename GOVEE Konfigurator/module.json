@@ -1,8 +1,8 @@
 {
-    "id": "{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}",
-    "name": "GOVEE Light",
-    "type": 3,
-    "vendor": "Govee",
+    "id": "{B7CDE428-2223-E922-DF68-C9A41BFFDDB4}",
+    "name": "GOVEE Konfigurator",
+    "type": 4,
+    "vendor": "",
     "aliases": [],
     "parentRequirements": [
         "{244A8DDD-ECFF-489F-6B91-F436AFAE7115}"
