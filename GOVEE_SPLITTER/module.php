@@ -29,6 +29,7 @@ declare(strict_types=1);
 			//print_r($config);
 			$this->SetSummary($config['BindIP'] .".". $config['BindPort']);
 
+			$this->SetStatus(102);
 
 		}
 
