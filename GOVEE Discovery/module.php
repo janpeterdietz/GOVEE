@@ -33,7 +33,6 @@ declare(strict_types=1);
 
 			$this->SetReceiveDataFilter($filter);
 
-
 			$this->ScanDevices();
 		}
 
