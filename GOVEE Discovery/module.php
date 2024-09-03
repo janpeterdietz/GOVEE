@@ -30,7 +30,8 @@ declare(strict_types=1);
 
 			if ($this->ReadPropertyBoolean('Active')) 
 			{
-                $this->SetTimerInterval('ScanTimer', 30 * 1000);
+                $this->ScanDevices();
+				$this->SetTimerInterval('ScanTimer', 30 * 1000);
                 $this->SetStatus(102);
             } else {
                 $this->SetTimerInterval('ScanTimer', 0);
@@ -45,8 +46,6 @@ declare(strict_types=1);
 		
 
 			$this->SetReceiveDataFilter($filter);
-
-			$this->ScanDevices();
 		}
 
 		public function SendData(string $Payload)
@@ -71,26 +70,15 @@ declare(strict_types=1);
 
 		public function ReceiveData($JSONString)
         {
-        	//IPS_LogMessage('Descvery RECV', $JSONString);
+        	//IPS_LogMessage('Discovery RECV', $JSONString);
 			
             $new_device_config = json_decode($this->ReadAttributeString('NewDevicesConfiguration'), true); // Platz füer Gereäte Configurationen / Info
 			
             $data = json_decode($JSONString, true);
-
-			//IPS_LogMessage('Descvery RECV', json_encode($data));
-
-			//$new_device_config ['deviceconf'] = $data['Buffer'];
 		
 			$new_device = json_decode($data['Buffer'], true)['msg']['data'];        
 		
 			$new_device_config ['deviceconf'] = $new_device;
-			
-			
-			
-			//print_r($new_device_config);	
-            
-			//IPS_LogMessage('Descvery 2 RECV', json_encode($new_device_config));
-			
 
             $this->WriteAttributeString('NewDevicesConfiguration', json_encode($new_device_config));
 			
