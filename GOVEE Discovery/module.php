@@ -7,7 +7,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 		}
 
 		public function Destroy()
