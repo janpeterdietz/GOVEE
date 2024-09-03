@@ -42,7 +42,7 @@ declare(strict_types=1);
 			
 			if ($this->HasActiveParent()) 
 			{
-				PS_LogMessage('Discovery Send', 'has active parent';
+				PS_LogMessage('Discovery Send', 'has active parent)';
 				$this->SendDataToParent(json_encode([
 				
 					'DataID' => '{244A8DDD-ECFF-489F-6B91-F436AFAE7115}',
