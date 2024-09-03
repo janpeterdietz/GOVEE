@@ -38,7 +38,7 @@ declare(strict_types=1);
 
 		public function SendData(string $Payload)
 		{
-			//IPS_LogMessage('Descvery Send', $Payload);
+			IPS_LogMessage('Discovery Send', $Payload);
 			
 			if ($this->HasActiveParent()) 
 			{
