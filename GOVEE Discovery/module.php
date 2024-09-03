@@ -8,6 +8,13 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+
+			$this->RegisterPropertyBoolean('Active', false);
+			$this->RegisterAttributeString('NewDevicesConfiguration', '{}');
+
+
+			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
+		
 		}
 
 		public function Destroy()
@@ -21,10 +28,16 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			$this->RegisterAttributeString('NewDevicesConfiguration', '{}');
+			if ($this->ReadPropertyBoolean('Active')) 
+			{
+                $this->SetTimerInterval('ScanTimer', 30 * 1000);
+                $this->SetStatus(102);
+            } else {
+                $this->SetTimerInterval('ScanTimer', 0);
+                $this->SetStatus(104);
+            }
 
-			$this->RegisterTimer("ScanTimer", 30 *1000, 'GVL_ScanDevices(' . $this->InstanceID . ');');
-		
+			
 			$filter = '.*scan.*';
 
 			//$filter = '.*"ClientIP":.*';
