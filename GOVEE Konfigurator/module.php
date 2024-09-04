@@ -59,9 +59,10 @@ declare(strict_types=1);
 			}
 			
 
-			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
+				
+				$count = 0;
 				foreach($availableDevices as  $device)
 				{	
 					if ( $availableDevices[$count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
@@ -71,8 +72,9 @@ declare(strict_types=1);
 						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
 					}
+					$count = $count+1;
 				}	
-				$count = $count+1;
+				
 			}
 
 			if (count($availableDevices) == 0)
@@ -87,11 +89,15 @@ declare(strict_types=1);
 					[
 						'type' => 'Configurator', 
 						'caption'=> 'Govee Konfigurator',
+						'sort' => [
+							'column' => 'IPAddress',
+							'direction' => 'ascending'
+						],
 						'delete' => true,
 						'columns' => [
 								[
 									'name' => 'name',
-									'caption' => 'Name',
+									'caption' => 'Name',	
 									'width' => 'auto'
 								],
 								[
