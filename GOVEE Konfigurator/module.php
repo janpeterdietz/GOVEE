@@ -7,6 +7,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
+			$this->ConnectParent("{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}");
 		}
 
 		public function Destroy()
@@ -37,7 +38,7 @@ declare(strict_types=1);
 			$newdevices = json_decode( GVL_GetDevices($discoveryID), true);
 		
 			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
-			
+			$availableDevices = [];
 			$count = 0;
 			foreach($newdevices as $device)
 			{
@@ -61,7 +62,6 @@ declare(strict_types=1);
 			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
-				$count = 0;
 				foreach($availableDevices as  $device)
 				{	
 					if ( $availableDevices[$count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
@@ -71,11 +71,15 @@ declare(strict_types=1);
 						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
 					}
-					$count = $count+1;
-				}
-				
+				}	
+				$count = $count+1;
 			}
 
+			if (count($availableDevices) == 0)
+			{
+				$availableDevices[$count]['name'] = 'no devices found';	
+			}
+				
 
 			return json_encode([
 			
