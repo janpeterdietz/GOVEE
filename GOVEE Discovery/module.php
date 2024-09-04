@@ -29,7 +29,7 @@ declare(strict_types=1);
 			if ($this->ReadPropertyBoolean('Active')) 
 			{
                 $this->ScanDevices();
-				$this->SetTimerInterval('ScanTimer', 30 * 1000);
+				$this->SetTimerInterval('ScanTimer', 60 * 1000);
                 $this->SetStatus(102);
             } else {
                 $this->SetTimerInterval('ScanTimer', 0);
