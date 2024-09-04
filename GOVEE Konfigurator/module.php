@@ -21,34 +21,52 @@ declare(strict_types=1);
 			parent::ApplyChanges();
 		}
 
+	
 
 		public function GetConfigurationForm()
 		{	
+			// hier müsste wohl Scan Device rein??
+			//IPS_LogMessage('Govee Configurator', GVL_GetDevices(34857));
+			$newdevices = json_decode( GVL_GetDevices(34857), true);
+		
+			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
 			
-			$availableDevices = [
-				[
-					'name' => 'Govee Light',
-					//'Device ID' => '1',
-					'InstanzID' => '0',
-					//'IPAddress' => '192.168.3.155',
-						'create' => [
-							'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
-							'configuration' => ['Active' => true]
-							]
-				]
-			];
+			$count = 0;
+			foreach($newdevices as $device)
+			{
+    			//IPS_LogMessage('Govee Configurator', $device['ip']);
+			
+				$availableDevices[$count] = 
+					[
+						'name' =>  'Govee ' . $device['sku'],
+						'InstanzID' => '0',
+						'IPAddress' => $device['ip'],
+							'create' => [	
+								'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
+								'configuration' => ['IPAddress' => $device['ip'],
+													'Active' => true]
+								]
+					];
+				$count = $count+1;
+			}
 			
 
 			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
+				$count = 0;
+				foreach($availableDevices as  $device)
+				{	
+					if ( $availableDevices[$count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
+					{
+						$availableDevices[$count]['instanceID'] = $instanceID;
+						$availableDevices[$count]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
+					}
+					$count = $count+1;
+				}
 				
-				$availableDevices[$count]['instanceID'] = $instanceID;
-				$availableDevices[$count]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
-				$availableDevices[$count]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
-				$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
-				$availableDevices[$count]['name'] = IPS_GetName( $instanceID);	
-				$count = $count+1;
 			}
 
 
@@ -58,6 +76,7 @@ declare(strict_types=1);
 					[
 						'type' => 'Configurator', 
 						'caption'=> 'Govee Konfigurator',
+						'delete' => true,
 						'columns' => [
 								[
 									'name' => 'name',

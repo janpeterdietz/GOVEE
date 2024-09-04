@@ -10,7 +10,7 @@ declare(strict_types=1);
 			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
 			$this->RegisterPropertyBoolean('Active', false);
-			$this->RegisterAttributeString('NewDevicesConfiguration', '{}');
+			$this->RegisterAttributeString('Devices', '{}');
 
 
 			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
@@ -40,21 +40,15 @@ declare(strict_types=1);
 
 			
 			$filter = '.*scan.*';
-
-			//$filter = '.*"ClientIP":.*';
-			//$filter .= '.*' . '"' . $IPAddress. '"'. '.*';
-		
-
 			$this->SetReceiveDataFilter($filter);
 		}
 
 		public function SendData(string $Payload)
 		{
-			IPS_LogMessage('Discovery Send', $Payload);
+			//IPS_LogMessage('Discovery Send', $Payload);
 			
 			if ($this->HasActiveParent()) 
 			{
-				IPS_LogMessage('Discovery Send', 'has active parent');
 				$this->SendDataToParent(json_encode([
 				
 					'DataID' => '{244A8DDD-ECFF-489F-6B91-F436AFAE7115}',
@@ -72,27 +66,48 @@ declare(strict_types=1);
         {
         	//IPS_LogMessage('Discovery RECV', $JSONString);
 			
-            $new_device_config = json_decode($this->ReadAttributeString('NewDevicesConfiguration'), true); // Platz füer Gereäte Configurationen / Info
-			
-            $data = json_decode($JSONString, true);
-		
-			$new_device = json_decode($data['Buffer'], true)['msg']['data'];        
-		
-			$new_device_config ['deviceconf'] = $new_device;
+			$data = json_decode($JSONString, true);
+            $devices = json_decode($this->ReadAttributeString('Devices'), true);
 
-            $this->WriteAttributeString('NewDevicesConfiguration', json_encode($new_device_config));
-			
+            $buffer = json_decode($data['Buffer'], true);
+            $data = $buffer['msg']['data'];
+
+            //IPS_LogMessage('test', print_r($devices, true));
+
+            if (array_key_exists('device', $data)) 
+			{
+                if (!array_key_exists($data['device'], $devices)) 
+				{
+                    $devices[$data['device']] = [
+                        'ip'              => $data['ip'],
+                        'sku'             => $data['sku'],
+                        'bleVersionHard'  => $data['bleVersionHard'],
+                        'bleVersionSoft'  => $data['bleVersionSoft'],
+                        'wifiVersionHard' => $data['wifiVersionHard'],
+                        'wifiVersionSoft' => $data['wifiVersionSoft']
+                    ];
+                }
+            }
+            $this->WriteAttributeString('Devices', json_encode($devices));
+			//IPS_LogMessage('Discovery', print_r($devices, true));
+
 		}
 
 
 
 		public function ScanDevices()
         {
-			
+			$this->WriteAttributeString('Devices', '{}');
 			//IPS_LogMessage('Descvery Send', "Scan Start");
 			$govee_message = '{"msg":{"cmd":"scan","data":{"account_topic":"reserve"}}} ';
 			$this->SendData($govee_message);
 
+		}
+
+		public function GetDevices()
+        {
+			
+			return ($this->ReadAttributeString('Devices'));
 		}
 
 
