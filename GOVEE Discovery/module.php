@@ -12,9 +12,7 @@ declare(strict_types=1);
 			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterAttributeString('Devices', '{}');
 
-
 			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
-		
 		}
 
 		public function Destroy()
