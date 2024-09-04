@@ -27,7 +27,15 @@ declare(strict_types=1);
 		{	
 			// hier müsste wohl Scan Device rein??
 			//IPS_LogMessage('Govee Configurator', GVL_GetDevices(34857));
-			$newdevices = json_decode( GVL_GetDevices(34857), true);
+
+			foreach (IPS_GetInstanceListByModuleID('{7B56B1ED-9DC0-3879-DF12-2635C582BDBE}') as $instanceID)
+			{
+				$discoveryID = $instanceID;
+			}
+
+			//IPS_LogMessage('Konfigurator',  $discoveryID);
+
+			$newdevices = json_decode( GVL_GetDevices($discoveryID), true);
 		
 			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
 			
