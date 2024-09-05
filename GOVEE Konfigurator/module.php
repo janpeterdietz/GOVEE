@@ -60,30 +60,30 @@ declare(strict_types=1);
 			
 			$no_newdevices = $count-1;
 
-			$count = 0;
+			
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				
-				//foreach($availableDevices as  $device)
+		
+				foreach($availableDevices as  $$count)
 				{	
-					if ( $availableDevices[$count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
+					if ( $availableDevices[$count-1]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
 					{
-						$availableDevices[$count]['instanceID'] = $instanceID;
-						$availableDevices[$count]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
-						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
-						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
+						$availableDevices[$count-1]['instanceID'] = $instanceID;
+						$availableDevices[$count-1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+						$availableDevices[$count-1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+						$availableDevices[$count-1]['name'] = IPS_GetName($instanceID);	
 					}
 					else
 					{
-						$availableDevices[$count+ $no_newdevices -1]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress');
-						$availableDevices[$count+ $no_newdevices -1]['instanceID'] = $instanceID;
-						$availableDevices[$count+ $no_newdevices -1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
-						$availableDevices[$count+ $no_newdevices -1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
-						$availableDevices[$count+ $no_newdevices -1]['name'] = IPS_GetName($instanceID);	
+						$availableDevices[$count-1+ $no_newdevices -1]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress');
+						$availableDevices[$count-1+ $no_newdevices -1]['instanceID'] = $instanceID;
+						$availableDevices[$count-1+ $no_newdevices -1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+						$availableDevices[$count-1+ $no_newdevices -1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+						$availableDevices[$count-1+ $no_newdevices -1]['name'] = IPS_GetName($instanceID);	
 					}
-					
 				}	
-				$count = $count+1;
+				
 			}
 
 			if (count($availableDevices) == 0)
