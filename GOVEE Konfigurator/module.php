@@ -72,6 +72,7 @@ declare(strict_types=1);
 						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
 					}
+					
 					$count = $count+1;
 				}	
 				
