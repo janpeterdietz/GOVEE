@@ -48,7 +48,7 @@ declare(strict_types=1);
 					[
 						'name' =>  'Govee ' . $device['sku'],
 						'InstanzID' => '0',
-						'DeviceID' => $key,
+						//'DeviceID' => $key,
 						'IPAddress' => $device['ip'],
 							'create' => [	
 								'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
