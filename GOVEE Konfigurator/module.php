@@ -39,12 +39,12 @@ declare(strict_types=1);
 		
 			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
 			$availableDevices = [];
-			
-			foreach($newdevices as $key => $device)
+			$count = 0;
+			foreach($newdevices as $device)
 			{
     			//IPS_LogMessage('Govee Configurator', $device['ip']);
 			
-				$availableDevices[$key] = 
+				$availableDevices[$count] = 
 					[
 						'name' =>  'Govee ' . $device['sku'],
 						'InstanzID' => '0',
@@ -55,13 +55,15 @@ declare(strict_types=1);
 													'Active' => true]
 								]
 					];
+				$count = $count+1;
 			}
-			
-			$no_new_devices = count($availableDevices);
+			$no_new_devices = $count; 
 
 			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
+				
+				IPS_LogMessage('Govee Configurator', $instanceID);
 				
 				$instance_match = false;
 				if ($no_new_devices >0)
