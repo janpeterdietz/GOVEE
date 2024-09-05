@@ -61,7 +61,7 @@ declare(strict_types=1);
 			}
 			$no_new_devices = $count; 
 
-			$count = 0; //Zähler
+			$count = 0; 
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				
