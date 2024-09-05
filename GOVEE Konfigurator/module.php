@@ -88,10 +88,10 @@ declare(strict_types=1);
 
 				if (!$found)
 				{
-					$availableDevices[$count + $no_new_devices-1]['instanceID'] = $instanceID;
-					$availableDevices[$count + $no_new_devices-1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
-					$availableDevices[$count + $no_new_devices-1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
-					$availableDevices[$count + $no_new_devices-1]['name'] = IPS_GetName($instanceID);
+					$availableDevices[$count + $no_new_devices]['instanceID'] = $instanceID;
+					$availableDevices[$count + $no_new_devices]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+					$availableDevices[$count + $no_new_devices]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+					$availableDevices[$count + $no_new_devices]['name'] = IPS_GetName($instanceID);
 					$count = $count+1;
 				}
 			}
