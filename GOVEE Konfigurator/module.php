@@ -52,7 +52,8 @@ declare(strict_types=1);
 						'IPAddress' => $device['ip'],
 							'create' => [	
 								'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
-								'configuration' => ['IPAddress' => $device['ip'],
+								'configuration' => ['DeviceID' => $key,
+													'IPAddress' => $device['ip'],
 													'Active' => true]
 								]
 					];
@@ -71,9 +72,10 @@ declare(strict_types=1);
 				{
 					foreach($availableDevices as  $key => $device)
 					{	
-						if ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
+						if ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
 						{
 							$availableDevices[$key]['instanceID'] = $instanceID;
+							$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
 							$availableDevices[$key]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
 							$availableDevices[$key]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 							$availableDevices[$key]['name'] = IPS_GetName($instanceID);	
@@ -115,7 +117,7 @@ declare(strict_types=1);
 								],
 								[
 									'name' => 'DeviceID',
-									'caption' => 'DeviceID',
+									'caption' => 'Device Identifier',
 									'width' => '200px'
 								],
 								[
