@@ -80,7 +80,7 @@ declare(strict_types=1);
 							$count = $count+1;
 						}
 					}
-				}	
+				}	 
 
 				if (!$instance_match)
 				{
