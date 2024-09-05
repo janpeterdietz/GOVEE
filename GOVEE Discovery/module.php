@@ -87,7 +87,7 @@ declare(strict_types=1);
                 }
             }
             $this->WriteAttributeString('Devices', json_encode($devices));
-			//IPS_LogMessage('Discovery', print_r($devices, true));
+			IPS_LogMessage('Discovery', print_r($devices, true));
 
 		}
 
