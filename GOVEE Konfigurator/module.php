@@ -63,7 +63,7 @@ declare(strict_types=1);
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				
-				IPS_LogMessage('Govee Configurator', $instanceID);
+				//IPS_LogMessage('Govee Configurator', $instanceID);
 				
 				$instance_match = false;
 				if ($no_new_devices >= 1)
