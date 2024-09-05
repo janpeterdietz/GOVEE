@@ -70,7 +70,7 @@ declare(strict_types=1);
 				foreach($availableDevices as  $device)
 				{	
 					IPS_LogMessage('Govee Configurator', $device);
-					
+
 					if ( $availableDevices[$new_device_count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
 					{
 						$availableDevices[$new_device_count]['instanceID'] = $instanceID;
@@ -83,7 +83,7 @@ declare(strict_types=1);
 					$new_device_count = $new_device_count+1;
 				}	
 
-				if (!found)
+				if (!$found)
 				{
 					$availableDevices[$count + $no_new_devices-1]['instanceID'] = $instanceID;
 					$availableDevices[$count + $no_new_devices-1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
