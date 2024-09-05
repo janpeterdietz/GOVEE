@@ -42,7 +42,7 @@ declare(strict_types=1);
 			$count = 0;
 			foreach($newdevices as $key => $device)
 			{
-    			IPS_LogMessage('Govee Configurator', $key);
+    			//IPS_LogMessage('Govee Configurator', $key);
 			
 				$availableDevices[$count] = 
 					[
@@ -72,7 +72,8 @@ declare(strict_types=1);
 				{
 					foreach($availableDevices as  $key => $device)
 					{	
-						if ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
+						//if ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
+						if ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
 						{
 							$availableDevices[$key]['instanceID'] = $instanceID;
 							$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
