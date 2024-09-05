@@ -103,6 +103,11 @@ declare(strict_types=1);
 									'width' => 'auto'
 								],
 								[
+									'name' => 'DeviceID',
+									'caption' => 'DeviceID',
+									'width' => 'auto'
+								]
+								[
 									'name' => 'IPAddress',
 									'caption' => 'IP Adress',
 									'width' => '150px'
