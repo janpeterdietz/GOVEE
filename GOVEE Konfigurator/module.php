@@ -42,7 +42,7 @@ declare(strict_types=1);
 			$count = 0;
 			foreach($newdevices as $key => $device)
 			{
-    			//IPS_LogMessage('Govee Configurator', $device['ip']);
+    			IPS_LogMessage('Govee Configurator', $key);
 			
 				$availableDevices[$count] = 
 					[
