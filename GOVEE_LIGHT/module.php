@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterPropertyInteger('Interval', 10);
+
+			$this->RegisterPropertyString("DeviceID", "");
 			$this->RegisterPropertyString("IPAddress", "192.168.178.1");
 			
 

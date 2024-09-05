@@ -11,6 +11,10 @@
         "suffix": "seconds"
     },
     {   "type": "ValidationTextBox", 
+        "name": "DeviceID", 
+        "caption": "Device Identifier"
+    },
+    {   "type": "ValidationTextBox", 
         "name": "IPAddress", 
         "caption": "IP address"
     }
