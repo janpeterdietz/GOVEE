@@ -106,7 +106,7 @@ declare(strict_types=1);
 									'name' => 'DeviceID',
 									'caption' => 'DeviceID',
 									'width' => 'auto'
-								]
+								],
 								[
 									'name' => 'IPAddress',
 									'caption' => 'IP Adress',
