@@ -66,7 +66,7 @@ declare(strict_types=1);
 				IPS_LogMessage('Govee Configurator', $instanceID);
 				
 				$instance_match = false;
-				if ($no_new_devices >0)
+				if ($no_new_devices >= 1)
 				{
 					foreach($availableDevices as  $key => $device)
 					{	
