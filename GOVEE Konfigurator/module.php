@@ -72,8 +72,8 @@ declare(strict_types=1);
 				{
 					foreach($availableDevices as  $key => $device)
 					{	
-						//if ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
-						if ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
+						if ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
+						//if ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
 						{
 							$availableDevices[$key]['instanceID'] = $instanceID;
 							$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
@@ -88,6 +88,7 @@ declare(strict_types=1);
 
 				if (!$instance_match)
 				{
+					$availableDevices[$count + $no_new_devices]['DeviceID'] = IPS_GetProperty($instanceID,'DeviceID' );
 					$availableDevices[$count + $no_new_devices]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
 					$availableDevices[$count + $no_new_devices]['instanceID'] = $instanceID;
 					$availableDevices[$count + $no_new_devices]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
