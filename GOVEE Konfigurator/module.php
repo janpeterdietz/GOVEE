@@ -57,26 +57,38 @@ declare(strict_types=1);
 					];
 				$count = $count+1;
 			}
-			
+			$no_new_devices = $count; 
 
+			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				
 				IPS_LogMessage('Govee Configurator', $instanceID);
 				
-				$count = 0;
+				$new_device_count= 0;
+				$found = false;
 				foreach($availableDevices as  $device)
 				{	
-					if ( $availableDevices[$count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
+					if ( $availableDevices[$new_device_count]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') )
 					{
-						$availableDevices[$count]['instanceID'] = $instanceID;
-						$availableDevices[$count]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
-						$availableDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
-						$availableDevices[$count]['name'] = IPS_GetName($instanceID);	
+						$availableDevices[$new_device_count]['instanceID'] = $instanceID;
+						$availableDevices[$new_device_count]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+						$availableDevices[$new_device_count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+						$availableDevices[$new_device_count]['name'] = IPS_GetName($instanceID);	
+						$found = true;
+						$count = $count+1;
 					}
-					$count = $count+1;
+					$new_device_count = $new_device_count+1;
 				}	
-				
+
+				if (!found)
+				{
+					$availableDevices[$count + $no_new_devices-1]['instanceID'] = $instanceID;
+					$availableDevices[$count + $no_new_devices-1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+					$availableDevices[$count + $no_new_devices-1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+					$availableDevices[$count + $no_new_devices-1]['name'] = IPS_GetName($instanceID);
+					$count = $count+1;
+				}
 			}
 
 			if (count($availableDevices) == 0)
