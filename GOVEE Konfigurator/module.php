@@ -75,6 +75,7 @@ declare(strict_types=1);
 					}
 					else
 					{
+						$availableDevices[$count+ $no_newdevices -1]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress');
 						$availableDevices[$count+ $no_newdevices -1]['instanceID'] = $instanceID;
 						$availableDevices[$count+ $no_newdevices -1]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
 						$availableDevices[$count+ $no_newdevices -1]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
