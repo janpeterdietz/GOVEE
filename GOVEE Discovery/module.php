@@ -70,28 +70,23 @@ declare(strict_types=1);
 
             $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
 
-          
-
-            //IPS_LogMessage('test', print_r($devices, true));
+			IPS_LogMessage('test', print_r($devices, true));
 
             if (array_key_exists('device', $data)) 
 			{
-                //if (!array_key_exists($data['device'], $devices)) 
-				{
-                    $devices[$data['device']] = [
-                        'ip'              => $data['ip'],
-                        'sku'             => $data['sku'],
-                        'bleVersionHard'  => $data['bleVersionHard'],
-                        'bleVersionSoft'  => $data['bleVersionSoft'],
-                        'wifiVersionHard' => $data['wifiVersionHard'],
-                        'wifiVersionSoft' => $data['wifiVersionSoft']
-                    ];
-                }
+                
+				$devices[$data['device']] = [
+					'ip'              => $data['ip'],
+					'sku'             => $data['sku'],
+					'bleVersionHard'  => $data['bleVersionHard'],
+					'bleVersionSoft'  => $data['bleVersionSoft'],
+					'wifiVersionHard' => $data['wifiVersionHard'],
+					'wifiVersionSoft' => $data['wifiVersionSoft']
+				];
+	
 				$this->WriteAttributeString('Devices', json_encode($devices));
-		
 			}
-          	//IPS_LogMessage('Discovery', print_r($devices, true));
-
+    
 		}
 
 
