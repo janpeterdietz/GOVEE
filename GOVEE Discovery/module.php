@@ -76,7 +76,7 @@ declare(strict_types=1);
 
             if (array_key_exists('device', $data)) 
 			{
-                if (!array_key_exists($data['device'], $devices)) 
+                //if (!array_key_exists($data['device'], $devices)) 
 				{
                     $devices[$data['device']] = [
                         'ip'              => $data['ip'],
@@ -87,9 +87,10 @@ declare(strict_types=1);
                         'wifiVersionSoft' => $data['wifiVersionSoft']
                     ];
                 }
-            }
-            $this->WriteAttributeString('Devices', json_encode($devices));
-			//IPS_LogMessage('Discovery', print_r($devices, true));
+				$this->WriteAttributeString('Devices', json_encode($devices));
+		
+			}
+          	//IPS_LogMessage('Discovery', print_r($devices, true));
 
 		}
 
