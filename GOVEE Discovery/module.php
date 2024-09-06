@@ -70,7 +70,7 @@ declare(strict_types=1);
 
             $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
 
-			IPS_LogMessage('test', print_r($devices, true));
+			//IPS_LogMessage('Discovery RECV', print_r($devices, true));
 
             if (array_key_exists('device', $new_device)) 
 			{
@@ -87,7 +87,7 @@ declare(strict_types=1);
 				$this->WriteAttributeString('Devices', json_encode($devices));
 			}
     
-			IPS_LogMessage('Discovery RECV', json_encode($devices));
+			//IPS_LogMessage('Discovery RECV', json_encode($devices));
 
 		}
 
