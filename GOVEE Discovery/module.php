@@ -62,14 +62,15 @@ declare(strict_types=1);
 
 		public function ReceiveData($JSONString)
         {
-        	IPS_LogMessage('Discovery RECV', $JSONString);
+        	//IPS_LogMessage('Discovery RECV', $JSONString);
 			
-			$data = json_decode($JSONString, true);
-
-            $devices = json_decode($this->ReadAttributeString('Devices'), true);
-
-            $buffer = json_decode($data['Buffer'], true);
+			$data = json_decode($JSONString, true); // neune Geräte
+			$buffer = json_decode($data['Buffer'], true);
             $data = $buffer['msg']['data'];
+
+            $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
+
+          
 
             //IPS_LogMessage('test', print_r($devices, true));
 
