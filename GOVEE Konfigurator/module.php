@@ -20,8 +20,17 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
+
+			$filter = 'Configurator';
+			$this->SetReceiveDataFilter($filter);
 		}
-	
+
+		
+		public function ReceiveData($JSONString)
+        {
+        	IPS_LogMessage('Configurator RECV', $JSONString);
+		}
+
 
 		public function GetConfigurationForm()
 		{	
@@ -35,7 +44,7 @@ declare(strict_types=1);
 
 			//IPS_LogMessage('Konfigurator',  $discoveryID);
 
-			$newdevices = json_decode( GVL_GetDevices($discoveryID), true);
+			$newdevices = json_decode( GVL_GetNewDevices($discoveryID), true);
 		
 			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
 			$availableDevices = [];
