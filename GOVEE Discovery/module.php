@@ -64,30 +64,30 @@ declare(strict_types=1);
         {
         	//IPS_LogMessage('Discovery RECV', $JSONString);
 			
-			$data = json_decode($JSONString, true);
-            $devices = json_decode($this->ReadAttributeString('Devices'), true);
+			$data = json_decode($JSONString, true); // neune Geräte
+			$buffer = json_decode($data['Buffer'], true);
+            $new_device = $buffer['msg']['data'];
 
-            $buffer = json_decode($data['Buffer'], true);
-            $data = $buffer['msg']['data'];
+            $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
 
-            //IPS_LogMessage('test', print_r($devices, true));
+			//IPS_LogMessage('Discovery RECV', print_r($devices, true));
 
-            if (array_key_exists('device', $data)) 
+            if (array_key_exists('device', $new_device)) 
 			{
-                if (!array_key_exists($data['device'], $devices)) 
-				{
-                    $devices[$data['device']] = [
-                        'ip'              => $data['ip'],
-                        'sku'             => $data['sku'],
-                        'bleVersionHard'  => $data['bleVersionHard'],
-                        'bleVersionSoft'  => $data['bleVersionSoft'],
-                        'wifiVersionHard' => $data['wifiVersionHard'],
-                        'wifiVersionSoft' => $data['wifiVersionSoft']
-                    ];
-                }
-            }
-            $this->WriteAttributeString('Devices', json_encode($devices));
-			//IPS_LogMessage('Discovery', print_r($devices, true));
+                
+				$devices[$new_device['device']] = [
+					'ip'              => $new_device['ip'],
+					'sku'             => $new_device['sku'],
+					'bleVersionHard'  => $new_device['bleVersionHard'],
+					'bleVersionSoft'  => $new_device['bleVersionSoft'],
+					'wifiVersionHard' => $new_device['wifiVersionHard'],
+					'wifiVersionSoft' => $new_device['wifiVersionSoft']
+				];
+	
+				$this->WriteAttributeString('Devices', json_encode($devices));
+			}
+    
+			//IPS_LogMessage('Discovery RECV', json_encode($devices));
 
 		}
 
