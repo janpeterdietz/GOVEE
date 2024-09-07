@@ -71,8 +71,8 @@ declare(strict_types=1);
 				{
 					foreach($availableDevices as  $key => $device)
 					{	
-						if (( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
-						or ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') ))
+						if ( ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
+						or   ( ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') ) and (IPS_GetProperty($instanceID,'DeviceID') == ''))) 
 						{
 							$availableDevices[$key]['instanceID'] = $instanceID;
 							$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
