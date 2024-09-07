@@ -12,6 +12,7 @@
     },
     {   "type": "ValidationTextBox", 
         "name": "DeviceID", 
+        "enabled" : false,
         "caption": "Device Identifier"
     },
     {   "type": "ValidationTextBox", 
@@ -20,5 +21,8 @@
     }
     ],
     "actions": [],
-    "status": []
+    "status": [
+        { "code": 102, "icon": "active", "caption": "Active" },
+        { "code": 104, "icon": "inactive", "caption": "Inactive" }
+    ]
 }
