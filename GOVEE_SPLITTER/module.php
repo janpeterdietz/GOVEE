@@ -25,12 +25,12 @@ declare(strict_types=1);
 			parent::ApplyChanges();
 			$this->GetConfigurationForParent();
 
-		 	$config = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
+		 	/*$config = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
 			//print_r($config);
 			$this->SetSummary($config['BindIP'] .".". $config['BindPort']);
 
 			$this->SetStatus(102);
-
+			*/
 		}
 
 		public function GetConfigurationForParent()
