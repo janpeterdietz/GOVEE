@@ -7,7 +7,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
 			$this->SetBuffer("Devices", '{}');
 
@@ -113,7 +113,7 @@ declare(strict_types=1);
 						'IPAddress' => $device['ip'],
 							'create' => [	
 								'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
-								'configuration' => ['DeviceID' => $$device['device'],
+								'configuration' => ['DeviceID' => $device['device'],
 													'IPAddress' => $device['ip'],
 													'Active' => true]
 								]
