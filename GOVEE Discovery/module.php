@@ -97,7 +97,7 @@ declare(strict_types=1);
 			IPS_Sleep(1000);			
 
 			$newdevices = json_decode( $this->GetBuffer('Devices'), true ) ;
-			IPS_LogMessage('Govee Configurator', $this->GetBuffer('Devices'));
+			//IPS_LogMessage('Govee Configurator', $this->GetBuffer('Devices'));
 			
 			
 			$availableDevices = [];
@@ -144,6 +144,8 @@ declare(strict_types=1);
 						$count = $count+1;
 					}
 				}	 
+				
+				IPS_LogMessage('Govee Configurator', 'count'. $count .'no_new_devices'. $no_new_devices);
 				
 				if (!$instance_match)
 				{
