@@ -9,7 +9,7 @@ declare(strict_types=1);
 			parent::Create();
 
 			//$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); // UBD Port
-			$this->RequireParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); // UBD Prot
+			$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); // UBD Prot
 			//$this->ForceParent('{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}'); // Mulicast Port anfordern
 		}
  
