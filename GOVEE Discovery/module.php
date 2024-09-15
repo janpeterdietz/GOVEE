@@ -93,8 +93,8 @@ declare(strict_types=1);
 
 		public function GetConfigurationForm()
 		{	
-			//$this->ScanDevices();
-			//IPS_Sleep(2000);			
+			$this->ScanDevices();
+			IPS_Sleep(1000);			
 
 			$newdevices = json_decode( $this->GetBuffer('Devices'), true ) ;
 			IPS_LogMessage('Govee Configurator', $this->GetBuffer('Devices'));
