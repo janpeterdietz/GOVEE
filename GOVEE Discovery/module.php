@@ -8,7 +8,9 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
-			$this->RegisterAttributeString('Devices', '{}');
+
+			//$this->RegisterAttributeString('Devices', '{}');
+			$this->SetBuffer("Devices", '{}');
 
 			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
 		}
@@ -67,13 +69,16 @@ declare(strict_types=1);
 			$buffer = json_decode($data['Buffer'], true);
             $new_device = $buffer['msg']['data'];
 
-            $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
+            //$devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
+			$devices = json_decode($this->GetBuffer('Devices'), true); // lese vorhandene Geräte
 
             if (array_key_exists('device', $new_device)) 
 			{
 				$devices += [$new_device['device'] => $new_device];
 
-				$this->WriteAttributeString('Devices', json_encode($devices));
+				//$this->WriteAttributeString('Devices', json_encode($devices));
+				$this->SetBuffer('Devices', json_encode($devices));
+
 			}
 
 		}
@@ -82,7 +87,9 @@ declare(strict_types=1);
 
 		public function ScanDevices()
         {
-			$this->WriteAttributeString('Devices', '{}');
+			//$this->WriteAttributeString('Devices', '{}');
+			$this->SetBuffer('Devices', '{}');
+			
 			//IPS_LogMessage('Descvery Send', "Scan Start");
 			$govee_message = '{"msg":{"cmd":"scan","data":{"account_topic":"reserve"}}} ';
 			$this->SendData($govee_message);
@@ -96,7 +103,9 @@ declare(strict_types=1);
 			$this->ScanDevices();
 			IPS_Sleep(1000);			
 
-			$newdevices = json_decode( $this->ReadAttributeString('Devices'), true ) ;
+			//$newdevices = json_decode( $this->ReadAttributeString('Devices'), true ) ;
+			$newdevices = json_decode( $this->GetBuffer('Devices'), true ) ;
+			
 
 			
 			$availableDevices = [];
@@ -203,10 +212,5 @@ declare(strict_types=1);
 					]
 				]
 			]);
-		}
-
-		public function GetNewDevices()
-        {
-			return ($this->ReadAttributeString('Devices'));
 		}
 	}
