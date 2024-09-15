@@ -144,7 +144,7 @@ declare(strict_types=1);
 						$count = $count+1;
 					}
 				}	 
-				/*
+				
 				if (!$instance_match)
 				{
 					$availableDevices[$count + $no_new_devices]['DeviceID'] = IPS_GetProperty($instanceID,'DeviceID' );
@@ -155,7 +155,7 @@ declare(strict_types=1);
 					$availableDevices[$count + $no_new_devices]['name'] = IPS_GetName($instanceID);
 					$count = $count+1;
 				}
-				*/
+				
 			}
 			
 			if (count($availableDevices) == 0)
