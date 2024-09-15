@@ -140,7 +140,7 @@ declare(strict_types=1);
 						{
 							$availableDevices[$key]['instanceID'] = $instanceID;
 							$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
-							$availableDevices[$key]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+							$availableDevices[$key]['Active'] = IPS_GetProperty($instanceID,'Active' );
 							$availableDevices[$key]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 							$availableDevices[$key]['name'] = IPS_GetName($instanceID);	
 							$instance_match = true;
@@ -154,7 +154,7 @@ declare(strict_types=1);
 					$availableDevices[$count + $no_new_devices]['DeviceID'] = IPS_GetProperty($instanceID,'DeviceID' );
 					$availableDevices[$count + $no_new_devices]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
 					$availableDevices[$count + $no_new_devices]['instanceID'] = $instanceID;
-			//		$availableDevices[$count + $no_new_devices]['deviceactive'] = IPS_GetProperty($instanceID,'Active' );
+					$availableDevices[$count + $no_new_devices]['Active'] = IPS_GetProperty($instanceID,'Active' );
 					$availableDevices[$count + $no_new_devices]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
 					$availableDevices[$count + $no_new_devices]['name'] = IPS_GetName($instanceID);
 					$count = $count+1;
@@ -191,7 +191,7 @@ declare(strict_types=1);
 									'width' => '150px'
 								],
 								[
-									'name' =>'deviceactive',
+									'name' =>'Active',
 									'caption' => 'Active',
 									'width' => '150px'
 								],
