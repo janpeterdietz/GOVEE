@@ -34,7 +34,6 @@ declare(strict_types=1);
 
 		public function GetConfigurationForm()
 		{	
-			// hier müsste wohl Scan Device rein??
 			//IPS_LogMessage('Govee Configurator', GVL_GetDevices(34857));
 
 			foreach (IPS_GetInstanceListByModuleID('{7B56B1ED-9DC0-3879-DF12-2635C582BDBE}') as $instanceID)
@@ -42,16 +41,17 @@ declare(strict_types=1);
 				$discoveryID = $instanceID;
 			}
 
-			//IPS_LogMessage('Konfigurator',  $discoveryID);
+			GVL_ScanDevices($discoveryID);
+			IPS_Sleep(1000);			
 
 			$newdevices = json_decode( GVL_GetNewDevices($discoveryID), true);
-		
-			//IPS_LogMessage('Konfigurator', print_r( $newdevices));
+
+			
 			$availableDevices = [];
 			$count = 0;
 			foreach($newdevices as $key => $device)
 			{
-    			//IPS_LogMessage('Govee Configurator', $key);
+				//IPS_LogMessage('Govee Configurator', $key);
 			
 				$availableDevices[$count] = 
 					[
@@ -68,6 +68,7 @@ declare(strict_types=1);
 					];
 				$count = $count+1;
 			}
+		
 			$no_new_devices = $count; 
 
 			$count = 0; // 

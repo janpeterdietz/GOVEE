@@ -72,16 +72,8 @@ declare(strict_types=1);
 
             if (array_key_exists('device', $new_device)) 
 			{
-                
-				$devices[$new_device['device']] = [
-					'ip'              => $new_device['ip'],
-					'sku'             => $new_device['sku'],
-					'bleVersionHard'  => $new_device['bleVersionHard'],
-					'bleVersionSoft'  => $new_device['bleVersionSoft'],
-					'wifiVersionHard' => $new_device['wifiVersionHard'],
-					'wifiVersionSoft' => $new_device['wifiVersionSoft']
-				];
-	
+				$devices += [$new_device['device'] => $new_device];
+
 				$this->WriteAttributeString('Devices', json_encode($devices));
 			}
 
