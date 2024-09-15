@@ -27,7 +27,7 @@ declare(strict_types=1);
 			//if ($this->ReadPropertyBoolean('Active')) 
 			{
                 $this->ScanDevices();
-				$this->SetTimerInterval('ScanTimer', 300 * 1000);
+				$this->SetTimerInterval('ScanTimer', 60 * 1000);
                 //$this->SetStatus(102);
             } 
 			/*else {
@@ -53,7 +53,7 @@ declare(strict_types=1);
 					'ClientIP'=> '239.255.255.250',
 					'ClientPort'=> 4001,
 					'Broadcast' => true,
-					'EnableBroadcast' => true,
+					'EnableBroadcast' => true
 				]));
 			}
 		}
