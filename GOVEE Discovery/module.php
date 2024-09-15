@@ -7,10 +7,9 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
-			$this->RegisterPropertyBoolean('Active', false);
-			$this->RegisterAttributeString('Devices', '{}');
+			$this->SetBuffer("Devices", '{}');
 
 			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
 		}
@@ -26,15 +25,16 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			if ($this->ReadPropertyBoolean('Active')) 
+			//if ($this->ReadPropertyBoolean('Active')) 
 			{
                 $this->ScanDevices();
-				$this->SetTimerInterval('ScanTimer', 60 * 1000);
-                $this->SetStatus(102);
-            } else {
+				$this->SetTimerInterval('ScanTimer', 300 * 1000);
+                //$this->SetStatus(102);
+            } 
+			/*else {
                 $this->SetTimerInterval('ScanTimer', 0);
                 $this->SetStatus(104);
-            }
+            }*/
 
 			
 			$filter = '.*scan.*';
@@ -54,7 +54,7 @@ declare(strict_types=1);
 					'ClientIP'=> '239.255.255.250',
 					'ClientPort'=> 4001,
 					'Broadcast' => true,
-					'EnableBroadcast' => true,
+					'EnableBroadcast' => true
 				]));
 			}
 		}
@@ -68,13 +68,12 @@ declare(strict_types=1);
 			$buffer = json_decode($data['Buffer'], true);
             $new_device = $buffer['msg']['data'];
 
-            $devices = json_decode($this->ReadAttributeString('Devices'), true); // lese vorhandene Geräte
+			$devices = json_decode($this->GetBuffer('Devices'), true); // lese vorhandene Geräte
 
             if (array_key_exists('device', $new_device)) 
 			{
 				$devices += [$new_device['device'] => $new_device];
-
-				$this->WriteAttributeString('Devices', json_encode($devices));
+				$this->SetBuffer('Devices', json_encode($devices));
 			}
 
 		}
@@ -83,15 +82,127 @@ declare(strict_types=1);
 
 		public function ScanDevices()
         {
-			$this->WriteAttributeString('Devices', '{}');
+			$this->SetBuffer('Devices', '{}');
+			
 			//IPS_LogMessage('Descvery Send', "Scan Start");
 			$govee_message = '{"msg":{"cmd":"scan","data":{"account_topic":"reserve"}}} ';
 			$this->SendData($govee_message);
 
 		}
 
-		public function GetNewDevices()
-        {
-			return ($this->ReadAttributeString('Devices'));
+
+		public function GetConfigurationForm()
+		{	
+			$this->ScanDevices();
+			IPS_Sleep(1000);			
+
+			$newdevices = json_decode( $this->GetBuffer('Devices'), true ) ;
+			//IPS_LogMessage('Govee Configurator', $this->GetBuffer('Devices'));
+			
+			
+			$availableDevices = [];
+			$count = 0;
+			
+			foreach($newdevices as $key => $device)
+			{
+			
+				$availableDevices[$count] = 
+					[
+						'name' =>  'Govee ' . $device['sku'],
+						'InstanzID' => '0',
+						'DeviceID' => $device['device'],
+						'IPAddress' => $device['ip'],
+							'create' => [	
+								'moduleID' => '{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}',
+								'configuration' => ['DeviceID' => $device['device'],
+													'IPAddress' => $device['ip'],
+													'Active' => true]
+								]
+					];
+				$count = $count+1;
+			}
+			
+			$no_new_devices = $count; 
+			$lostDevices = [];
+			$count = 0;
+			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
+			{
+				$matched_instanz = false;	
+				foreach($availableDevices as $key => $device)
+				{	
+					if ( ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
+					or   ( ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') ) and (IPS_GetProperty($instanceID,'DeviceID') == ''))) 
+					{
+						$availableDevices[$key]['instanceID'] = $instanceID;
+						$availableDevices[$key]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );
+						$availableDevices[$key]['Active'] = IPS_GetProperty($instanceID,'Active' );
+						$availableDevices[$key]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );
+						$availableDevices[$key]['name'] = IPS_GetName($instanceID);	
+						$matched_instanz = true;
+					}
+				}
+
+				if (!$matched_instanz)
+				{
+					$lostDevices[$count]['instanceID'] = $instanceID;
+					$lostDevices[$count]['DeviceID'] = IPS_GetProperty($instanceID,'DeviceID' );;
+					$lostDevices[$count]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );;
+					$lostDevices[$count]['Active'] = IPS_GetProperty($instanceID,'Active' );;
+					$lostDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );;
+					$lostDevices[$count]['name'] = IPS_GetName($instanceID);	
+					$count += 1;
+				}
+			}
+			
+			foreach($lostDevices as $key => $device)
+			{	
+				$availableDevices[$key+$no_new_devices] = $lostDevices[$key];
+			}
+			
+			
+			if (count($availableDevices) == 0)
+			{
+				$availableDevices[$count]['name'] = 'no devices found';	
+			}
+				
+
+			return json_encode([
+			
+				"actions" => [
+					[
+						'type' => 'Configurator', 
+						'caption'=> 'Govee Konfigurator',
+						'delete' => true,
+						'columns' => [
+								[
+									'name' => 'name',
+									'caption' => 'Name',
+									'width' => 'auto'
+								],
+								[
+									'name' => 'DeviceID',
+									'caption' => 'Device Identifier',
+									'width' => '200px'
+								],
+								[
+									'name' => 'IPAddress',
+									'caption' => 'IP Adress',
+									'width' => '150px'
+								],
+								[
+									'name' =>'Active',
+									'caption' => 'Active',
+									'width' => '150px'
+								],
+								[
+									'name' =>'timerinterval',
+									'caption' => 'Timer Interval',
+									'width' => '150px'
+								]
+						],
+						'values' => $availableDevices
+					]
+				]
+			]);
 		}
 	}
