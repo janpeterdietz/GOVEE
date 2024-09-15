@@ -147,7 +147,11 @@ declare(strict_types=1);
 				if (!$matched_instanz)
 				{
 					$lostDevices[$count]['instanceID'] = $instanceID;
+					$lostDevices[$count]['DeviceID'] = IPS_GetProperty($instanceID,'DeviceID' );;
 					$lostDevices[$count]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );;
+					$lostDevices[$count]['Active'] = IPS_GetProperty($instanceID,'Active' );;
+					$lostDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );;
+					$lostDevices[$count]['name'] = IPS_GetName($instanceID);
 					
 					$count += 1;
 				}
