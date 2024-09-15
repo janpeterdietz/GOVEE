@@ -130,8 +130,6 @@ declare(strict_types=1);
 				$matched_instanz = false;	
 				foreach($availableDevices as $key => $device)
 				{	
-					IPS_LogMessage('Govee Configurator', 'key'. $key);  
-					
 					if ( ( $availableDevices[$key]['DeviceID'] == IPS_GetProperty($instanceID,'DeviceID') )
 					or   ( ( $availableDevices[$key]['IPAddress'] == IPS_GetProperty($instanceID,'IPAddress') ) and (IPS_GetProperty($instanceID,'DeviceID') == ''))) 
 					{
@@ -151,24 +149,21 @@ declare(strict_types=1);
 					$lostDevices[$count]['IPAddress'] = IPS_GetProperty($instanceID,'IPAddress' );;
 					$lostDevices[$count]['Active'] = IPS_GetProperty($instanceID,'Active' );;
 					$lostDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );;
-					$lostDevices[$count]['name'] = IPS_GetName($instanceID);
-					
+					$lostDevices[$count]['name'] = IPS_GetName($instanceID);	
 					$count += 1;
 				}
 			}
 			
-			IPS_LogMessage('Govee Configurator', print_r($lostDevices, true));
-
 			foreach($lostDevices as $key => $device)
 			{	
 				$availableDevices[$key+$no_new_devices] = $lostDevices[$key];
 			}
 			
 			
-			/*if (count($availableDevices) == 0)
+			if (count($availableDevices) == 0)
 			{
 				$availableDevices[$count]['name'] = 'no devices found';	
-			}*/
+			}
 				
 
 			return json_encode([
