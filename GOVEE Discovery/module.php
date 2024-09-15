@@ -8,8 +8,6 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::Create();
 			$this->ForceParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
-
-			$this->RegisterPropertyBoolean('Active', false);
 			$this->RegisterAttributeString('Devices', '{}');
 
 			$this->RegisterTimer("ScanTimer", 0, 'GVL_ScanDevices(' . $this->InstanceID . ');');
@@ -26,15 +24,16 @@ declare(strict_types=1);
 			//Never delete this line!
 			parent::ApplyChanges();
 
-			if ($this->ReadPropertyBoolean('Active')) 
+			//if ($this->ReadPropertyBoolean('Active')) 
 			{
                 $this->ScanDevices();
-				$this->SetTimerInterval('ScanTimer', 60 * 1000);
+				$this->SetTimerInterval('ScanTimer', 300 * 1000);
                 $this->SetStatus(102);
-            } else {
+            } 
+			/*else {
                 $this->SetTimerInterval('ScanTimer', 0);
                 $this->SetStatus(104);
-            }
+            }*/
 
 			
 			$filter = '.*scan.*';
