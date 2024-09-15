@@ -28,7 +28,7 @@ declare(strict_types=1);
 			{
                 $this->ScanDevices();
 				$this->SetTimerInterval('ScanTimer', 300 * 1000);
-                $this->SetStatus(102);
+                //$this->SetStatus(102);
             } 
 			/*else {
                 $this->SetTimerInterval('ScanTimer', 0);
