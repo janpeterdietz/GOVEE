@@ -123,6 +123,7 @@ declare(strict_types=1);
 			
 			$no_new_devices = count($availableDevices); 
 			$lostDevices = [];
+			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				$matched_instanz = false;	
@@ -148,13 +149,14 @@ declare(strict_types=1);
 					$lostDevices[$count]['Active'] = IPS_GetProperty($instanceID,'Active' );;
 					$lostDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );;
 					$lostDevices[$count]['name'] = IPS_GetName($instanceID);	
+					$count = $count +1;
 				}
 			}
 			
 			
 			foreach($lostDevices as $key => $device)
 			{	
-				$availableDevices[$key+$no_new_devices-1] = $lostDevices[$key];
+				$availableDevices[$key+$no_new_devices] = $lostDevices[$key];
 			}
 			
 			
