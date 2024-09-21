@@ -160,7 +160,7 @@ declare(strict_types=1);
 			
 			if (count($availableDevices) == 0)
 			{
-				$availableDevices[$count]['name'] = 'no devices found';	
+				$availableDevices[0]['name'] = 'no devices found';	
 			}
 				
 
