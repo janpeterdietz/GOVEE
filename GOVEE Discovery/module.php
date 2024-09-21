@@ -105,7 +105,6 @@ declare(strict_types=1);
 			
 			foreach($newdevices as $key => $device)
 			{
-			
 				$availableDevices[$count] = 
 					[
 						'name' =>  'Govee ' . $device['sku'],
@@ -124,7 +123,6 @@ declare(strict_types=1);
 			
 			$no_new_devices = $count; 
 			$lostDevices = [];
-			$count = 0;
 			foreach (IPS_GetInstanceListByModuleID('{E1C6AE31-06E8-74DF-CE5F-6DE9A7AED29D}') as $instanceID)
 			{
 				$matched_instanz = false;	
@@ -150,7 +148,6 @@ declare(strict_types=1);
 					$lostDevices[$count]['Active'] = IPS_GetProperty($instanceID,'Active' );;
 					$lostDevices[$count]['timerinterval'] = IPS_GetProperty($instanceID,'Interval' );;
 					$lostDevices[$count]['name'] = IPS_GetName($instanceID);	
-					$count += 1;
 				}
 			}
 			
