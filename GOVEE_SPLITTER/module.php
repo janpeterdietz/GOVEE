@@ -23,12 +23,8 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::ApplyChanges();
-			$this->GetConfigurationForParent();
-
-		 	/*$config = json_decode( IPS_GetConfiguration(IPS_GetInstance($this->InstanceID)['ConnectionID']), true);
-			//print_r($config);
-			$this->SetSummary($config['BindIP'] .".". $config['BindPort']);
-			*/
+			$config = json_decode( $this->GetConfigurationForParent(), true); // UDP Port konfigurieren
+			$this->SetSummary('UDP Config: ' . $config['BindIP'] .":". $config['BindPort']);
 			$this->SetStatus(102);
 			
 		}
