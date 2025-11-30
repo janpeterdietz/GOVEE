@@ -6,6 +6,7 @@
             "State": "Status",
             "Intensity": "Intensität",
             "Brightness": "Helligkeit",
+            "Reachable": "Erreichbarkeit",
             "Color": "Farbe",
             "Color Temperature": "Farbtemperatur",
             "seconds": "Sekunden",

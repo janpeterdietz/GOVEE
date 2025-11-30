@@ -29,15 +29,17 @@ declare(strict_types=1);
 			$this->RegisterVariableInteger('Brightness', $this->Translate('Brightness'), '~Intensity.100', 20);
 			$this->RegisterVariableInteger('Color', $this->Translate('Color'), '~HexColor', 30);
 			$this->RegisterVariableInteger('ColorTemperature', $this->Translate('Color Temperature'), 'GVL.ColorTemperature', 40);
-            
+
+			$this->RegisterVariableBoolean('Reachable', $this->Translate('Reachable'), '', 50);
+
+			$this->RegisterAttributeInteger('Reachable_Counter', 0);
+			$this->SetValue('Reachable', false);
+
 			$this->EnableAction('State');
 			$this->EnableAction('Brightness');
 			$this->EnableAction('Color');
 			$this->EnableAction('ColorTemperature');		
        
-			
-			$this->RegisterPropertyInteger("UpdateInterval", 10);
-
 			$this->RegisterTimer("Updatestate", ($this->ReadPropertyInteger("Interval"))*1000, 'GVL_UpdateState(' . $this->InstanceID . ');');
 		}
 		
@@ -78,13 +80,24 @@ declare(strict_types=1);
 
 		}
 
-		public function Send()
+		/*public function Send()
 		{
 			$this->SendDataToParent(json_encode(['DataID' => '{244A8DDD-ECFF-489F-6B91-F436AFAE7115}']));
 		}
+		*/
 
 		public function SendData(string $Payload)
 		{
+			
+			$counter = $this->ReadAttributeInteger('Reachable_Counter');
+			if ($counter > 10) $counter = 2;
+			$this->WriteAttributeInteger('Reachable_Counter', $counter+1);
+				
+			if ($counter > 1)
+			{
+				$this->SetValue('Reachable', false);
+			}
+				
 			if ($this->HasActiveParent()) 
 			{
 				$this->SendDataToParent(json_encode([
@@ -109,10 +122,15 @@ declare(strict_types=1);
 			
 			if ($data->ClientIP == $this->ReadPropertyString("IPAddress"))
 			{
+		
 				$buffer = json_decode($data->Buffer, true);
 
 				if ($buffer['msg']['cmd'] == 'devStatus')
 				{
+					$this->WriteAttributeInteger('Reachable_Counter', 0);
+
+					$this->SetValue('Reachable', true);
+
 					$deviceData = $buffer['msg']['data'];
 
 					$this->SetValue('State', $deviceData['onOff']);
