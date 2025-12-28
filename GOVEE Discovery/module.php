@@ -7,7 +7,7 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Create();
-			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			//$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
 			$this->SetBuffer("Devices", '{}');
 
@@ -18,6 +18,16 @@ declare(strict_types=1);
 		{
 			//Never delete this line!
 			parent::Destroy();
+		}
+
+		public function GetCompatibleParents(): string
+		{
+			return json_encode([
+				'type' => 'connect',
+				'moduleIDs' => [
+				'{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}'
+				]
+			]);
 		}
 
 		public function ApplyChanges()
