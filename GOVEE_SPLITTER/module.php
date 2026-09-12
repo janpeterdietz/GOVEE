@@ -70,7 +70,9 @@ declare(strict_types=1);
             	'ClientPort' => $data->ClientPort,
 
 				'EnableBroadcast' => true,
-				'Broadcast' => $data->Broadcast
+				///'Broadcast' => $data->Broadcast
+				'Broadcast' => 0
+
 
 				]));
 
