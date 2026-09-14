@@ -62,7 +62,6 @@ declare(strict_types=1);
 
 			$this->SendDataToParent(json_encode([
 		
-				//'DataID' => '{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}', // Multicast
 				'DataID' => '{8E4D9B23-E0F2-1E05-41D8-C21EA53B8706}', // UDP
 				'Buffer' => $data->Buffer, 
 				
@@ -70,10 +69,8 @@ declare(strict_types=1);
             	'ClientPort' => $data->ClientPort,
 
 				'EnableBroadcast' => true,
-				///'Broadcast' => $data->Broadcast
-				'Broadcast' => 0
-
-
+				'Broadcast' => $data->Broadcast
+	
 				]));
 
 			return 'String data for device instance!';
