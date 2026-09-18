@@ -12,6 +12,16 @@ declare(strict_types=1);
 			$this->ConnectParent('{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'); // UBD Prot
 			//$this->ForceParent('{BAB408E0-0A0F-48C3-B14E-9FB2FA81F66A}'); // Mulicast Port anfordern
 		}
+
+		public function GetCompatibleParents(): string
+		{
+			return json_encode([
+				'type' => 'connect',
+				'moduleIDs' => [
+				'{82347F20-F541-41E1-AC5B-A636FD3AE2D8}'
+				]
+			]);
+		}
  
 		public function Destroy()
 		{
@@ -52,15 +62,15 @@ declare(strict_types=1);
 
 			$this->SendDataToParent(json_encode([
 		
-				//'DataID' => '{C8792760-65CF-4C53-B5C7-A30FCC84FEFE}', // Multicast
 				'DataID' => '{8E4D9B23-E0F2-1E05-41D8-C21EA53B8706}', // UDP
 				'Buffer' => $data->Buffer, 
 				
 				'ClientIP' => $data->ClientIP,
             	'ClientPort' => $data->ClientPort,
+
 				'EnableBroadcast' => true,
 				'Broadcast' => $data->Broadcast
-				
+	
 				]));
 
 			return 'String data for device instance!';

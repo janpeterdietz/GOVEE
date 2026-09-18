@@ -9,7 +9,7 @@ declare(strict_types=1);
 			parent::Create();
 
 			//$this->RequireParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
-			$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
+			//$this->ConnectParent('{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}');
 
 			if (!IPS_VariableProfileExists('GVL.ColorTemperature')) 
 			{
@@ -43,6 +43,15 @@ declare(strict_types=1);
 			$this->RegisterTimer("Updatestate", ($this->ReadPropertyInteger("Interval"))*1000, 'GVL_UpdateState(' . $this->InstanceID . ');');
 		}
 		
+		public function GetCompatibleParents(): string
+		{
+			return json_encode([
+				'type' => 'connect',
+				'moduleIDs' => [
+				'{87579ED9-E5BC-EBCD-0095-8D532ECC16BC}'
+				]
+			]);
+		}
 
 		public function Destroy()
 		{
